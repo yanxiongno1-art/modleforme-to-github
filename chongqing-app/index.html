@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>反馈详情</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,23 +13,23 @@
         }
 
         :root {
-            --primary-blue: #0037B0;
-            --text-dark: #191C1E;
-            --text-secondary: #6B7280;
-            --bg-white: #FFFFFF;
-            --bg-light: #F7FAFC;
-            --bg-section: rgba(0, 55, 176, 0.05);
-            --border-color: #E0E3E6;
-            --warning-red: #DC2626;
-            --warning-bg: #FEE2E2;
-            --success-green: #16A34A;
-            --success-bg: #DCFCE7;
-            --shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --text-primary: #191c1e;
+            --text-secondary: #434755;
+            --primary-blue: #0037b0;
+            --bg-white: #ffffff;
+            --bg-light-gray: #e6e8ea;
+            --bg-section-header: #0037b0;
+            --bg-light: #f2f4f6;
+            --bg-red-light: #ffdad6;
+            --border-color: #e0e3e5;
+            --border-red: #ffdad6;
+            --text-red: #ba1a1a;
+            --text-red-dark: #93000a;
         }
 
         body {
-            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-light);
+            font-family: 'WenQuanYi Zen Hei', 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-light-gray);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -38,13 +38,9 @@
 
         .app-container {
             width: 390px;
-            max-height: 844px;
             background: var(--bg-white);
-            border-radius: 40px;
             overflow: hidden;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            display: flex;
-            flex-direction: column;
         }
 
         /* Header */
@@ -75,67 +71,48 @@
         .back-btn svg {
             width: 24px;
             height: 24px;
-            stroke: var(--text-dark);
+            stroke: var(--text-primary);
         }
 
         .header-title {
             flex: 1;
             text-align: center;
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 600;
-            color: var(--text-dark);
+            line-height: 28px;
+            color: var(--text-primary);
             margin-right: 40px;
         }
 
         /* Map Header */
         .map-header {
             height: 192px;
-            background: #E6EAED;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .map-placeholder {
-            width: 100%;
-            height: 100%;
+            background: var(--bg-light-gray);
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #E8ECEF 0%, #D1D5DB 100%);
-            position: relative;
-        }
-
-        .map-placeholder::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 200px;
-            height: 150px;
-            border: 2px dashed #9CA3AF;
-            border-radius: 8px;
         }
 
         .map-label {
             font-size: 12px;
             color: var(--text-secondary);
             background: rgba(255, 255, 255, 0.9);
-            padding: 6px 12px;
+            padding: 8px 16px;
             border-radius: 4px;
-            z-index: 1;
         }
 
         /* Content */
         .content {
-            flex: 1;
-            overflow-y: auto;
             padding: 12px;
         }
 
         /* Section */
         .section {
             margin-bottom: 12px;
+            background: var(--bg-white);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
         }
 
         .section-header {
@@ -143,47 +120,51 @@
             align-items: center;
             gap: 8px;
             padding: 12px 16px;
-            background: var(--bg-section);
-            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-section-header);
         }
 
         .section-icon {
             width: 16px;
             height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .section-icon svg {
             width: 16px;
             height: 16px;
-            fill: var(--primary-blue);
+            fill: white;
         }
 
         .section-title {
             font-size: 18px;
             font-weight: 600;
-            color: var(--primary-blue);
+            line-height: 24px;
+            color: white;
         }
 
         .section-content {
-            padding: 12px 16px;
+            padding: 16px;
         }
 
         /* Info Row */
         .info-row {
             display: flex;
             align-items: flex-start;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--bg-light);
+            gap: 12px;
+            padding-bottom: 12px;
         }
 
         .info-row:last-child {
-            border-bottom: none;
+            padding-bottom: 0;
         }
 
         .info-label {
-            width: 100px;
+            width: 84px;
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 600;
+            line-height: 20px;
             color: var(--text-secondary);
             flex-shrink: 0;
         }
@@ -191,88 +172,131 @@
         .info-value {
             flex: 1;
             font-size: 14px;
-            font-weight: 500;
-            color: var(--text-dark);
+            font-weight: 400;
+            line-height: 20px;
+            color: var(--text-primary);
         }
 
-        .info-value.highlight {
+        .info-value.blue {
             color: var(--primary-blue);
-            font-weight: 600;
+            font-weight: 500;
+        }
+
+        .info-value.red {
+            color: var(--text-red);
+            font-weight: 500;
+        }
+
+        /* Sub Info Row */
+        .sub-info {
+            padding-left: 16px;
+            margin-bottom: 12px;
+        }
+
+        .sub-info:last-child {
+            margin-bottom: 0;
         }
 
         /* Alert Section */
-        .alert-section {
-            background: var(--warning-bg);
-            padding: 12px 16px;
+        .section.alert-section {
+            background: var(--bg-white);
+            border: 1px solid var(--border-red);
         }
 
-        .alert-item {
+        .section.alert-section .section-header {
+            background: var(--bg-red-light);
+            border-bottom: 1px solid var(--border-red);
+        }
+
+        .section.alert-section .section-title {
+            color: var(--text-primary);
+        }
+
+        .section.alert-section .section-icon svg {
+            fill: var(--text-red);
+        }
+
+        .section.alert-section .section-content {
+            padding: 16px;
+        }
+
+        .alert-row {
             display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 0;
+            align-items: flex-start;
+            gap: 12px;
+            padding-bottom: 12px;
+            margin-bottom: 12px;
+            border-bottom: 1px solid var(--border-red);
         }
 
-        .alert-item:not(:last-child) {
-            border-bottom: 1px solid rgba(220, 38, 38, 0.2);
+        .alert-row:last-child {
+            padding-bottom: 0;
+            margin-bottom: 0;
+            border-bottom: none;
         }
 
         .alert-icon {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
+            width: 26px;
+            height: 15px;
+            background: var(--text-red);
+            border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
+            padding: 2px 8px;
         }
 
-        .alert-icon.warning {
-            background: var(--warning-red);
-        }
-
-        .alert-icon.warning svg {
+        .alert-icon svg {
             width: 12px;
             height: 12px;
             fill: white;
         }
 
-        .alert-icon.success {
-            background: var(--success-green);
-        }
-
-        .alert-icon.success svg {
-            width: 12px;
-            height: 12px;
-            fill: white;
-        }
-
-        .alert-text {
+        .alert-label {
             font-size: 14px;
+            font-weight: 400;
+            line-height: 20px;
+            color: var(--text-secondary);
+        }
+
+        .alert-value {
+            font-size: 12px;
             font-weight: 500;
-            color: var(--text-dark);
-        }
-
-        .alert-text.negative {
-            color: var(--warning-red);
-        }
-
-        .alert-text.positive {
-            color: var(--success-green);
+            line-height: 16px;
+            color: var(--text-red-dark);
         }
 
         /* Description Section */
+        .section.description-section {
+            background: var(--bg-white);
+            border: 1px solid var(--border-color);
+        }
+
+        .section.description-section .section-header {
+            background: var(--bg-light);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section.description-section .section-title {
+            color: var(--text-primary);
+        }
+
+        .section.description-section .section-icon svg {
+            fill: var(--text-secondary);
+        }
+
         .description-box {
             background: var(--bg-light);
             padding: 16px;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
+            border-radius: 4px;
         }
 
         .description-text {
             font-size: 14px;
-            line-height: 1.8;
-            color: var(--text-dark);
+            font-weight: 400;
+            line-height: 22.75px;
+            color: var(--text-primary);
             white-space: pre-wrap;
         }
 
@@ -280,39 +304,45 @@
         .weather-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
+            gap: 12px;
         }
 
         .weather-item {
-            background: var(--bg-light);
-            padding: 12px 8px;
-            border-radius: 8px;
-            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
         }
 
         .weather-label {
             font-size: 12px;
+            font-weight: 500;
+            line-height: 16px;
             color: var(--text-secondary);
-            margin-bottom: 4px;
         }
 
         .weather-value {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--text-dark);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 20px;
+            color: var(--text-primary);
+        }
+
+        .weather-value.bold {
+            font-weight: 500;
         }
 
         /* Media Grid */
         .media-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
+            gap: 12px;
         }
 
         .media-card {
             aspect-ratio: 1;
-            background: var(--bg-light);
-            border-radius: 8px;
+            background: var(--bg-light-gray);
+            border-radius: 4px;
             overflow: hidden;
             position: relative;
         }
@@ -321,17 +351,6 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-        }
-
-        .media-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,0.5));
-            padding: 8px;
-            color: white;
-            font-size: 12px;
         }
 
         /* Video indicator */
@@ -345,9 +364,6 @@
             height: 32px;
             background: rgba(255, 255, 255, 0.9);
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         .video-card::before {
@@ -355,7 +371,7 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-40%, -50%);
             z-index: 1;
             border-style: solid;
             border-width: 8px 0 8px 14px;
@@ -378,13 +394,13 @@
             animation: fadeInUp 0.5s ease forwards;
         }
 
-        .section:nth-child(1) { animation-delay: 0.1s; }
-        .section:nth-child(2) { animation-delay: 0.15s; }
-        .section:nth-child(3) { animation-delay: 0.2s; }
-        .section:nth-child(4) { animation-delay: 0.25s; }
-        .section:nth-child(5) { animation-delay: 0.3s; }
-        .section:nth-child(6) { animation-delay: 0.35s; }
-        .section:nth-child(7) { animation-delay: 0.4s; }
+        .content .section:nth-child(1) { animation-delay: 0.1s; }
+        .content .section:nth-child(2) { animation-delay: 0.15s; }
+        .content .section:nth-child(3) { animation-delay: 0.2s; }
+        .content .section:nth-child(4) { animation-delay: 0.25s; }
+        .content .section:nth-child(5) { animation-delay: 0.3s; }
+        .content .section:nth-child(6) { animation-delay: 0.35s; }
+        .content .section:nth-child(7) { animation-delay: 0.4s; }
     </style>
 </head>
 <body>
@@ -401,9 +417,7 @@
 
         <!-- Map Header -->
         <div class="map-header">
-            <div class="map-placeholder">
-                <span class="map-label">220kV 盘旱北线三跨卫星地图</span>
-            </div>
+            <span class="map-label">220kV 盘旱北线三跨卫星地图</span>
         </div>
 
         <!-- Content -->
@@ -421,11 +435,11 @@
                 <div class="section-content">
                     <div class="info-row">
                         <div class="info-label">线路名称</div>
-                        <div class="info-value highlight">220kV 盘旱北线</div>
+                        <div class="info-value blue">220kV 盘旱北线</div>
                     </div>
                     <div class="info-row">
                         <div class="info-label">被跨越物</div>
-                        <div class="info-value">220kV盘旱北线#92至220kV盘旱北线#93跨郑万高铁</div>
+                        <div class="info-value">220kV盘旱北线#92至220kV盘旱北线 #93跨郑万高铁</div>
                     </div>
                 </div>
             </div>
@@ -443,16 +457,16 @@
                 <div class="section-content">
                     <div class="media-grid">
                         <div class="media-card video-card">
-                            <img src="https://via.placeholder.com/100x100/E8ECEF/9CA3AF?text=照片1" alt="现场照片1">
+                            <img src="https://via.placeholder.com/100x100/E6E8EA/9CA3AF?text=1" alt="照片1">
                         </div>
                         <div class="media-card video-card">
-                            <img src="https://via.placeholder.com/100x100/E8ECEF/9CA3AF?text=照片2" alt="现场照片2">
+                            <img src="https://via.placeholder.com/100x100/E6E8EA/9CA3AF?text=2" alt="照片2">
                         </div>
                         <div class="media-card video-card">
-                            <img src="https://via.placeholder.com/100x100/E8ECEF/9CA3AF?text=照片3" alt="现场照片3">
+                            <img src="https://via.placeholder.com/100x100/E6E8EA/9CA3AF?text=3" alt="照片3">
                         </div>
                         <div class="media-card video-card">
-                            <img src="https://via.placeholder.com/100x100/E8ECEF/9CA3AF?text=照片4" alt="现场照片4">
+                            <img src="https://via.placeholder.com/100x100/E6E8EA/9CA3AF?text=4" alt="照片4">
                         </div>
                     </div>
                 </div>
@@ -473,39 +487,43 @@
                         <div class="info-label">倒塔情况</div>
                         <div class="info-value"></div>
                     </div>
-                    <div class="info-row" style="padding-left: 16px;">
-                        <div class="info-label">杆塔编号</div>
-                        <div class="info-value">盘旱北线#92杆塔</div>
-                    </div>
-                    <div class="info-row" style="padding-left: 16px;">
-                        <div class="info-label">倒塔程度</div>
-                        <div class="info-value">塔头折断</div>
-                    </div>
-                    <div class="info-row" style="padding-left: 16px;">
-                        <div class="info-label">倒塔方向</div>
-                        <div class="info-value">东南方向 (朝向东高速)</div>
-                    </div>
-                    <div class="info-row" style="padding-left: 16px;">
-                        <div class="info-label">基础状态</div>
-                        <div class="info-value" style="color: var(--success-green);">基础良好</div>
+                    <div class="sub-info">
+                        <div class="info-row">
+                            <div class="info-label">杆塔编号</div>
+                            <div class="info-value">盘旱北线#92杆塔</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">倒塔程度</div>
+                            <div class="info-value red">塔头折断</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">倒塔方向</div>
+                            <div class="info-value">东南方向 (朝向高速公路)</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">基础状态</div>
+                            <div class="info-value">基础完好</div>
+                        </div>
                     </div>
                     <div class="info-row">
                         <div class="info-label">断线情况</div>
                         <div class="info-value"></div>
                     </div>
-                    <div class="info-row" style="padding-left: 16px;">
-                        <div class="info-label">断线相别</div>
-                        <div class="info-value" style="color: var(--warning-red);">A相, B相</div>
-                    </div>
-                    <div class="info-row" style="padding-left: 16px;">
-                        <div class="info-label">断线位置</div>
-                        <div class="info-value">档中断线/杆塔挂点短路线</div>
+                    <div class="sub-info">
+                        <div class="info-row">
+                            <div class="info-label">断线相别</div>
+                            <div class="info-value">A相, B相</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">断线位置</div>
+                            <div class="info-value">档中断线/杆塔挂点短路线</div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Section 4: 现场险情 -->
-            <div class="section">
+            <div class="section alert-section">
                 <div class="section-header">
                     <div class="section-icon">
                         <svg viewBox="0 0 16 16">
@@ -514,52 +532,30 @@
                     </div>
                     <span class="section-title">现场险情</span>
                 </div>
-                <div class="alert-section">
-                    <div class="alert-item">
-                        <div class="alert-icon warning">
-                            <svg viewBox="0 0 12 12">
-                                <path d="M6 0L0 12H12L6 0Z"/>
-                            </svg>
-                        </div>
-                        <span class="alert-text negative">接触跨越设施: 郑万高铁</span>
+                <div class="section-content">
+                    <div class="alert-row">
+                        <div class="alert-label">触碰跨越设施</div>
+                        <div class="alert-value">郑万高铁</div>
                     </div>
-                    <div class="alert-item">
-                        <div class="alert-icon warning">
-                            <svg viewBox="0 0 12 12">
-                                <path d="M6 0L0 12H12L6 0Z"/>
-                            </svg>
-                        </div>
-                        <span class="alert-text negative">接地短路</span>
+                    <div class="alert-row">
+                        <div class="alert-label">接地短路</div>
                     </div>
-                    <div class="alert-item">
-                        <div class="alert-icon warning">
-                            <svg viewBox="0 0 12 12">
-                                <path d="M6 0L0 12H12L6 0Z"/>
-                            </svg>
-                        </div>
-                        <span class="alert-text negative">火灾隐患</span>
+                    <div class="alert-row">
+                        <div class="alert-label">火灾隐患</div>
                     </div>
-                    <div class="alert-item">
-                        <div class="alert-icon warning">
-                            <svg viewBox="0 0 12 12">
-                                <path d="M6 0L0 12H12L6 0Z"/>
-                            </svg>
-                        </div>
-                        <span class="alert-text negative">交通影响: 完全阻塞通行</span>
+                    <div class="alert-row">
+                        <div class="alert-label">交通影响</div>
+                        <div class="alert-value">完全阻断通行</div>
                     </div>
-                    <div class="alert-item">
-                        <div class="alert-icon success">
-                            <svg viewBox="0 0 12 12">
-                                <path d="M2 6L5 9L10 3"/>
-                            </svg>
-                        </div>
-                        <span class="alert-text positive">人员伤亡: 无人员受伤</span>
+                    <div class="alert-row">
+                        <div class="alert-label">人员伤亡</div>
+                        <div class="info-value">无人员受伤</div>
                     </div>
                 </div>
             </div>
 
             <!-- Section 5: 现场情况描述 -->
-            <div class="section">
+            <div class="section description-section">
                 <div class="section-header">
                     <div class="section-icon">
                         <svg viewBox="0 0 16 16">
@@ -576,7 +572,7 @@
             </div>
 
             <!-- Section 6: 现场微气象 -->
-            <div class="section">
+            <div class="section description-section">
                 <div class="section-header">
                     <div class="section-icon">
                         <svg viewBox="0 0 16 16">
@@ -593,11 +589,11 @@
                         </div>
                         <div class="weather-item">
                             <div class="weather-label">温度</div>
-                            <div class="weather-value">14.5°C</div>
+                            <div class="weather-value">14.5 °C</div>
                         </div>
                         <div class="weather-item">
                             <div class="weather-label">风速</div>
-                            <div class="weather-value">2级</div>
+                            <div class="weather-value bold">2级</div>
                         </div>
                         <div class="weather-item">
                             <div class="weather-label">风向</div>
@@ -620,13 +616,13 @@
                 <div class="section-content">
                     <div class="media-grid">
                         <div class="media-card">
-                            <img src="https://via.placeholder.com/100x100/E8ECEF/9CA3AF?text=图片1" alt="现场图片1">
+                            <img src="https://via.placeholder.com/100x100/E6E8EA/9CA3AF?text=1" alt="图片1">
                         </div>
                         <div class="media-card">
-                            <img src="https://via.placeholder.com/100x100/E8ECEF/9CA3AF?text=图片2" alt="现场图片2">
+                            <img src="https://via.placeholder.com/100x100/E6E8EA/9CA3AF?text=2" alt="图片2">
                         </div>
                         <div class="media-card">
-                            <img src="https://via.placeholder.com/100x100/E8ECEF/9CA3AF?text=图片3" alt="现场图片3">
+                            <img src="https://via.placeholder.com/100x100/E6E8EA/9CA3AF?text=3" alt="图片3">
                         </div>
                     </div>
                 </div>
@@ -645,13 +641,13 @@
                 <div class="section-content">
                     <div class="media-grid">
                         <div class="media-card video-card">
-                            <img src="https://via.placeholder.com/100x100/E8ECEF/9CA3AF?text=视频1" alt="现场视频1">
+                            <img src="https://via.placeholder.com/100x100/E6E8EA/9CA3AF?text=1" alt="视频1">
                         </div>
                         <div class="media-card video-card">
-                            <img src="https://via.placeholder.com/100x100/E8ECEF/9CA3AF?text=视频2" alt="现场视频2">
+                            <img src="https://via.placeholder.com/100x100/E6E8EA/9CA3AF?text=2" alt="视频2">
                         </div>
                         <div class="media-card video-card">
-                            <img src="https://via.placeholder.com/100x100/E8ECEF/9CA3AF?text=视频3" alt="现场视频3">
+                            <img src="https://via.placeholder.com/100x100/E6E8EA/9CA3AF?text=3" alt="视频3">
                         </div>
                     </div>
                 </div>
