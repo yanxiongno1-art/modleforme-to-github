@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>重庆 App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #0058BD;
+            --text-dark: #191C1E;
+            --text-gray: #6B7280;
+            --bg-white: #FFFFFF;
+            --bg-light: #F2F4F8;
+            --border-gray: #E0E3E6;
+            --card-bg: #ECF0F3;
+            --shadow: rgba(0, 0, 0, 0.05);
+        }
+
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(180deg, #FFFFFF 0%, #F7FAFE 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+        }
+
+        .app-container {
+            width: 390px;
+            max-height: 844px;
+            background: var(--bg-white);
+            border-radius: 40px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            position: relative;
+        }
+
+        /* Status Bar */
+        .status-bar {
+            height: 44px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+            background: var(--bg-white);
+        }
+
+        .status-time {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .status-icons {
+            display: flex;
+            gap: 5px;
+        }
+
+        .status-icons svg {
+            width: 18px;
+            height: 12px;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 16px;
+            background: var(--bg-white);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-btn {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .back-btn svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--text-dark);
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 16px;
+        }
+
+        .action-btn {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .action-btn svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--text-dark);
+        }
+
+        /* Search Bar */
+        .search-bar {
+            padding: 8px 16px;
+        }
+
+        .search-input {
+            width: 100%;
+            height: 40px;
+            background: var(--bg-light);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            gap: 8px;
+        }
+
+        .search-input svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--text-gray);
+        }
+
+        .search-input span {
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+
+        /* Content Area */
+        .content {
+            padding: 12px;
+            overflow-y: auto;
+            max-height: calc(844px - 44px - 56px - 56px - 80px);
+        }
+
+        /* Hot Spots Section */
+        .section {
+            margin-bottom: 12px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 4px;
+        }
+
+        .section-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        .section-icon svg {
+            width: 16px;
+            height: 13px;
+            fill: var(--primary-blue);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        /* Image Grid */
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            padding: 16px;
+            background: var(--bg-white);
+            border: 1px solid var(--border-gray);
+            border-radius: 8px;
+            box-shadow: 0 1px 2px var(--shadow);
+        }
+
+        .image-card {
+            aspect-ratio: 1;
+            background: var(--card-bg);
+            border: 1px solid var(--border-gray);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Video Section */
+        .video-section {
+            background: #F2F5F6;
+            border: 1px solid var(--border-gray);
+            border-left: none;
+            border-right: none;
+            border-top: none;
+            border-radius: 0;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .video-icon svg {
+            width: 16px;
+            height: 13px;
+            fill: var(--primary-blue);
+        }
+
+        .video-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        /* Video Cards */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            padding: 16px;
+            background: var(--bg-white);
+            border: 1px solid var(--border-gray);
+            border-radius: 8px;
+            box-shadow: 0 1px 2px var(--shadow);
+        }
+
+        .video-card {
+            aspect-ratio: 1;
+            background: var(--card-bg);
+            border: 1px solid var(--border-gray);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .video-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+        }
+
+        .video-play-btn {
+            position: absolute;
+            width: 26px;
+            height: 26px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 3px rgba(0, 0, 0, 0.07), 0 2px 2px rgba(0, 0, 0, 0.06);
+        }
+
+        .video-play-btn svg {
+            width: 12px;
+            height: 12px;
+            fill: var(--bg-white);
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            height: 80px;
+            background: var(--bg-white);
+            border-top: 1px solid var(--border-gray);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding-bottom: 20px;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item.active .nav-icon svg {
+            stroke: var(--primary-blue);
+        }
+
+        .nav-item.active .nav-label {
+            color: var(--primary-blue);
+        }
+
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        .nav-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--text-gray);
+            stroke-width: 1.5;
+        }
+
+        .nav-label {
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+
+        /* Home Indicator */
+        .home-indicator {
+            width: 134px;
+            height: 5px;
+            background: var(--text-dark);
+            border-radius: 100px;
+            margin: 8px auto;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section {
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        .section:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .section:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        .image-card {
+            animation: fadeInUp 0.4s ease forwards;
+            opacity: 0;
+        }
+
+        .image-card:nth-child(1) { animation-delay: 0.3s; }
+        .image-card:nth-child(2) { animation-delay: 0.35s; }
+        .image-card:nth-child(3) { animation-delay: 0.4s; }
+
+        .video-card {
+            animation: fadeInUp 0.4s ease forwards;
+            opacity: 0;
+        }
+
+        .video-card:nth-child(1) { animation-delay: 0.5s; }
+        .video-card:nth-child(2) { animation-delay: 0.55s; }
+        .video-card:nth-child(3) { animation-delay: 0.6s; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <span class="status-time">9:41</span>
+            <div class="status-icons">
+                <svg viewBox="0 0 18 12" fill="none">
+                    <path d="M1 4.5C1 3.67 1.67 3 2.5 3H3.5C4.33 3 5 3.67 5 4.5V7.5C5 8.33 4.33 9 3.5 9H2.5C1.67 9 1 8.33 1 7.5V4.5Z" fill="black"/>
+                    <path d="M6 3C6 2.17 6.67 1.5 7.5 1.5H8.5C9.33 1.5 10 2.17 10 3V7.5C10 8.33 9.33 9 8.5 9H7.5C6.67 9 6 8.33 6 7.5V3Z" fill="black"/>
+                    <path d="M11 1.5C11 0.67 11.67 0 12.5 0H13.5C14.33 0 15 0.67 15 1.5V7.5C15 8.33 14.33 9 13.5 9H12.5C11.67 9 11 8.33 11 7.5V1.5Z" fill="black"/>
+                    <rect x="16" y="0.5" width="2" height="11" rx="0.5" fill="black"/>
+                </svg>
+                <svg viewBox="0 0 15 11" fill="none">
+                    <path d="M7.5 2.5C5.26 2.5 3.29 3.74 2.18 5.5C3.29 7.26 5.26 8.5 7.5 8.5C9.74 8.5 11.71 7.26 12.82 5.5C11.71 3.74 9.74 2.5 7.5 2.5Z" stroke="black" stroke-width="1"/>
+                    <circle cx="7.5" cy="5.5" r="1.5" fill="black"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <div class="header-left">
+                <div class="back-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                        <path d="M15 18L9 12L15 6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <span class="header-title">重庆</span>
+            </div>
+            <div class="header-actions">
+                <div class="action-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                        <circle cx="18" cy="5" r="3"/>
+                        <circle cx="6" cy="12" r="3"/>
+                        <circle cx="18" cy="19" r="3"/>
+                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                    </svg>
+                </div>
+                <div class="action-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                        <path d="M4 12V8.44C4 6.52 5.52 5 7.44 5C8.8 5 10.03 5.81 10.56 7L12 10L13.44 7C13.97 5.81 15.2 5 16.56 5C18.48 5 20 6.52 20 8.44V12C20 17 12 21 12 21C12 21 4 17 4 12Z" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <div class="search-input">
+                <svg viewBox="0 0 20 20" fill="none" stroke-width="2">
+                    <circle cx="9" cy="9" r="7"/>
+                    <line x1="14" y1="14" x2="18" y2="18"/>
+                </svg>
+                <span>搜索景点、美食、攻略...</span>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Hot Spots Section -->
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-icon">
+                        <svg viewBox="0 0 16 13">
+                            <path d="M8 0L0 6V13H16V6L8 0Z" fill="#0058BD"/>
+                        </svg>
+                    </div>
+                    <span class="section-title">热门景点</span>
+                </div>
+                <div class="image-grid">
+                    <div class="image-card">
+                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=A%20stunning%20view%20of%20Hongya%20Cave%20in%20Chongqing%20at%20night%2C%20traditional%20Chinese%20architecture%20with%20glowing%20lights%2C%20modern%20cityscape%20background%2C%20photorealistic&image_size=square" alt="洪崖洞">
+                    </div>
+                    <div class="image-card">
+                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Liziba%20monorail%20train%20passing%20through%20a%20residential%20building%20in%20Chongqing%2C%20unique%20urban%20landscape%2C%20modern%20city%20architecture%2C%20photorealistic&image_size=square" alt="李子坝">
+                    </div>
+                    <div class="image-card">
+                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Wulong%20Karst%20landscape%20in%20Chongqing%2C%20natural%20stone%20bridges%20and%20mountains%2C%20dramatic%20scenery%2C%20green%20forests%2C%20photorealistic&image_size=square" alt="武隆">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Section -->
+            <div class="section">
+                <div class="video-section">
+                    <div class="video-icon">
+                        <svg viewBox="0 0 16 13">
+                            <path d="M8 0L0 6V13H16V6L8 0Z" fill="#0058BD"/>
+                        </svg>
+                    </div>
+                    <span class="video-title">现场视频</span>
+                </div>
+                <div class="video-grid">
+                    <div class="video-card">
+                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Night%20view%20of%20Chongqing%20city%20lights%20from%20the%20river%2C%20illuminated%20buildings%20and%20bridges%2C%20urban%20nightlife%20scene%2C%20cinematic&image_size=square" alt="夜景">
+                        <div class="video-play-btn">
+                            <svg viewBox="0 0 12 12">
+                                <path d="M3 2L10 6L3 10V2Z" fill="white"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="video-card">
+                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Spicy%20Chongqing%20hotpot%20cooking%2C%20steaming%20pot%20with%20red%20broth%2C%20fresh%20ingredients%2C%20traditional%20Chinese%20cuisine%2C%20food%20photography&image_size=square" alt="火锅">
+                        <div class="video-play-btn">
+                            <svg viewBox="0 0 12 12">
+                                <path d="M3 2L10 6L3 10V2Z" fill="white"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="video-card">
+                        <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=Jiefangbei%20CBD%20in%20Chongqing%2C%20busy%20shopping%20street%2C%20modern%20commercial%20area%2C%20people%20walking%2C%20urban%20life&image_size=square" alt="解放碑">
+                        <div class="video-play-btn">
+                            <svg viewBox="0 0 12 12">
+                                <path d="M3 2L10 6L3 10V2Z" fill="white"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <div class="nav-item active">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M3 9L12 2L21 9V20C21 20.53 20.79 21.04 20.41 21.41C20.04 21.79 19.53 22 19 22H5C4.47 22 3.96 21.79 3.59 21.41C3.21 21.04 3 20.53 3 20V9Z" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9 22V12H15V22" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <span class="nav-label">首页</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <circle cx="11" cy="11" r="8"/>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                </div>
+                <span class="nav-label">发现</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M12 21C12 21 4 17 4 12V5L12 2L20 5V12C20 17 12 21 12 21Z"/>
+                    </svg>
+                </div>
+                <span class="nav-label">收藏</span>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M20 21V19C20 17.94 19.58 16.92 18.83 16.17C18.08 15.42 17.06 15 16 15H8C6.94 15 5.92 15.42 5.17 16.17C4.42 16.92 4 17.94 4 19V21"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                </div>
+                <span class="nav-label">我的</span>
+            </div>
+        </div>
+
+        <!-- Home Indicator -->
+        <div class="home-indicator"></div>
+    </div>
+</body>
+</html>
